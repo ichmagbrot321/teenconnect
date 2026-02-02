@@ -1,1 +1,373 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="Sichere Dating & Chat App für Jugendliche">
+    
+    <title>SafeChat - Sichere Dating App</title>
+    
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/png" href="/public/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="/public/icons/icon-192.png">
+    
+    <link rel="stylesheet" href="/src/css/style.css">
+</head>
+<body>
+    <!-- WICHTIGER SICHERHEITS-DISCLAIMER BEI JEDEM LOGIN -->
+    <div id="safety-disclaimer-modal" class="modal hidden">
+        <div class="modal-content safety-modal">
+            <div class="modal-header">
+                <h2>⚠️ WICHTIGE SICHERHEITSHINWEISE</h2>
+            </div>
+            
+            <div class="modal-body">
+                <div class="disclaimer-section critical">
+                    <h3>🚨 KEINE VERANTWORTUNG DER PLATTFORM</h3>
+                    <p><strong>Wir übernehmen KEINE Haftung für:</strong></p>
+                    <ul>
+                        <li>Inhalte von anderen Nutzern</li>
+                        <li>Treffen im echten Leben</li>
+                        <li>Weitergabe persönlicher Daten</li>
+                        <li>Beziehungen oder Kontakte</li>
+                    </ul>
+                    <p class="warning-text">Du bist selbst verantwortlich für dein Verhalten!</p>
+                </div>
 
+                <div class="disclaimer-section">
+                    <h3>👨‍👩‍👧 ELTERN SIND VERANTWORTLICH</h3>
+                    <p>Wenn du unter 16 bist, müssen deine Eltern:</p>
+                    <ul>
+                        <li>Deiner Nutzung zustimmen</li>
+                        <li>Deine Aktivitäten überwachen</li>
+                        <li>Für dein Verhalten haften</li>
+                    </ul>
+                </div>
+
+                <div class="disclaimer-section">
+                    <h3>📞 WICHTIGE NOTFALLNUMMERN</h3>
+                    <div class="emergency-numbers">
+                        <div class="number-item">
+                            <strong>110</strong> - Polizei Notruf
+                        </div>
+                        <div class="number-item">
+                            <strong>116 111</strong> - Nummer gegen Kummer (Kinder & Jugendliche)
+                        </div>
+                        <div class="number-item">
+                            <strong>0800 22 55 530</strong> - Hilfetelefon sexueller Missbrauch
+                        </div>
+                        <div class="number-item">
+                            <strong>jugend.support</strong> - Online-Beratung
+                        </div>
+                    </div>
+                </div>
+
+                <div class="disclaimer-section rules">
+                    <h3>📜 GOLDENE REGELN</h3>
+                    <ol>
+                        <li><strong>NIEMALS persönliche Daten teilen</strong> (Adresse, Schule, Telefon)</li>
+                        <li><strong>NIEMALS alleine mit Fremden treffen</strong></li>
+                        <li><strong>Rede mit deinen Eltern</strong> über deine Kontakte</li>
+                        <li><strong>Melde SOFORT verdächtiges Verhalten</strong></li>
+                        <li><strong>Keine Nacktbilder</strong> - Das ist strafbar!</li>
+                        <li><strong>Screenshots können geteilt werden</strong> - Sei vorsichtig!</li>
+                        <li><strong>Blockiere bei Unbehagen</strong> - Lieber einmal zu viel!</li>
+                    </ol>
+                </div>
+
+                <div class="disclaimer-section warning">
+                    <h3>🔍 WIR MODERIEREN, ABER NICHT LIVE</h3>
+                    <p>Unsere Moderation arbeitet mit:</p>
+                    <ul>
+                        <li>Automatischen Wortfiltern</li>
+                        <li>Meldungen durch Nutzer</li>
+                        <li>Manueller Überprüfung durch Moderatoren</li>
+                    </ul>
+                    <p class="warning-text">⚠️ Es gibt KEINE Live-Überwachung 24/7!</p>
+                    <p><strong>DU bist die erste Verteidigungslinie! Melde alles Verdächtige!</strong></p>
+                </div>
+
+                <div class="disclaimer-section red-flags">
+                    <h3>🚩 WARNSIGNALE - MELDE SOFORT:</h3>
+                    <ul class="red-flag-list">
+                        <li>Jemand will deine Adresse oder Schule wissen</li>
+                        <li>Jemand drängt dich zu Treffen</li>
+                        <li>Jemand bittet um Nacktbilder oder intime Fotos</li>
+                        <li>Jemand will auf andere Plattformen wechseln</li>
+                        <li>Jemand gibt sich als jemand anderes aus</li>
+                        <li>Jemand redet über Geheimnisse vor Eltern</li>
+                        <li>Jemand bietet Geld oder Geschenke an</li>
+                        <li>Erwachsene kontaktieren dich</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="disclaimer-read-1" required>
+                        <span>Ich habe die Sicherheitshinweise gelesen und verstanden</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="disclaimer-read-2" required>
+                        <span>Ich weiß, dass die Plattform keine Haftung übernimmt</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="disclaimer-read-3" required>
+                        <span>Ich werde verdächtiges Verhalten sofort melden</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="disclaimer-read-4" required>
+                        <span>Ich habe mit meinen Eltern über diese App gesprochen</span>
+                    </label>
+                </div>
+                <button id="accept-disclaimer-btn" class="btn btn-primary" disabled>
+                    Ich akzeptiere und verstehe die Hinweise
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN/REGISTER SCREEN -->
+    <div id="auth-screen" class="screen active">
+        <div class="auth-container">
+            <div class="app-logo">
+                <h1>💬 SafeChat</h1>
+                <p class="tagline">Sicher. Moderiert. Für Jugendliche.</p>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <div id="login-form" class="auth-form">
+                <h2>Login</h2>
+                <form id="login-form-element">
+                    <div class="form-group">
+                        <label for="login-email">E-Mail</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Passwort</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Einloggen</button>
+                </form>
+                <p class="form-switch">
+                    Noch kein Account? <a href="#" id="show-register">Registrieren</a>
+                </p>
+            </div>
+
+            <!-- REGISTER FORM -->
+            <div id="register-form" class="auth-form hidden">
+                <h2>Registrierung</h2>
+                <form id="register-form-element">
+                    <div class="form-group">
+                        <label for="register-username">Benutzername</label>
+                        <input type="text" id="register-username" minlength="3" maxlength="20" required>
+                        <small>3-20 Zeichen</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-email">Deine E-Mail</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-birthdate">Geburtsdatum</label>
+                        <input type="date" id="register-birthdate" required>
+                        <small>Du musst mindestens 14 Jahre alt sein</small>
+                    </div>
+
+                    <div class="form-group" id="parent-email-group" style="display: none;">
+                        <label for="register-parent-email">E-Mail deiner Eltern *PFLICHT*</label>
+                        <input type="email" id="register-parent-email">
+                        <small class="info-text">⚠️ Du bist unter 16! Deine Eltern müssen zustimmen und bekommen eine Bestätigungs-E-Mail.</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-password">Passwort</label>
+                        <input type="password" id="register-password" minlength="8" required>
+                        <small>Mindestens 8 Zeichen</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="register-region">Region (Bundesland)</label>
+                        <select id="register-region" required>
+                            <option value="">Bitte wählen</option>
+                            <option value="BW">Baden-Württemberg</option>
+                            <option value="BY">Bayern</option>
+                            <option value="BE">Berlin</option>
+                            <option value="BB">Brandenburg</option>
+                            <option value="HB">Bremen</option>
+                            <option value="HH">Hamburg</option>
+                            <option value="HE">Hessen</option>
+                            <option value="MV">Mecklenburg-Vorpommern</option>
+                            <option value="NI">Niedersachsen</option>
+                            <option value="NW">Nordrhein-Westfalen</option>
+                            <option value="RP">Rheinland-Pfalz</option>
+                            <option value="SL">Saarland</option>
+                            <option value="SN">Sachsen</option>
+                            <option value="ST">Sachsen-Anhalt</option>
+                            <option value="SH">Schleswig-Holstein</option>
+                            <option value="TH">Thüringen</option>
+                        </select>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="accept-terms" required>
+                            <span>Ich akzeptiere die <a href="#" id="show-terms">AGB</a> und <a href="#" id="show-privacy">Datenschutzerklärung</a></span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="accept-rules" required>
+                            <span>Ich habe die <a href="#" id="show-community-rules">Community-Regeln</a> gelesen</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="accept-age" required>
+                            <span>Ich bestätige, dass ich mindestens 14 Jahre alt bin</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Registrieren</button>
+                </form>
+                <p class="form-switch">
+                    Schon ein Account? <a href="#" id="show-login">Einloggen</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP SCREEN -->
+    <div id="app-screen" class="screen hidden">
+        <!-- Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-screen="discover">
+                <span class="icon">🔍</span>
+                <span class="label">Entdecken</span>
+            </button>
+            <button class="nav-item" data-screen="chats">
+                <span class="icon">💬</span>
+                <span class="label">Chats</span>
+                <span class="badge hidden" id="chat-badge">0</span>
+            </button>
+            <button class="nav-item" data-screen="profile">
+                <span class="icon">👤</span>
+                <span class="label">Profil</span>
+            </button>
+        </nav>
+
+        <!-- Discover Screen -->
+        <div id="discover-screen" class="app-content active">
+            <div class="header">
+                <h2>Entdecken</h2>
+            </div>
+            <div id="user-cards" class="user-cards"></div>
+        </div>
+
+        <!-- Chats Screen -->
+        <div id="chats-screen" class="app-content hidden">
+            <div class="header">
+                <h2>Chats</h2>
+            </div>
+            <div id="chat-list" class="chat-list"></div>
+        </div>
+
+        <!-- Chat Detail Screen -->
+        <div id="chat-detail-screen" class="app-content hidden">
+            <div class="chat-header">
+                <button id="back-to-chats" class="btn-back">←</button>
+                <div class="chat-user-info">
+                    <img id="chat-user-avatar" src="" alt="">
+                    <div>
+                        <h3 id="chat-user-name"></h3>
+                        <span id="chat-user-status" class="status-text"></span>
+                    </div>
+                </div>
+                <button id="chat-call-btn" class="btn-icon">📞</button>
+                <button id="chat-video-btn" class="btn-icon">📹</button>
+                <button id="chat-menu-btn" class="btn-icon">⋮</button>
+            </div>
+            <div id="messages-container" class="messages-container"></div>
+            <div class="chat-input-container">
+                <input type="text" id="message-input" placeholder="Nachricht schreiben...">
+                <button id="send-message-btn" class="btn-send">➤</button>
+            </div>
+        </div>
+
+        <!-- Profile Screen -->
+        <div id="profile-screen" class="app-content hidden">
+            <div class="header">
+                <h2>Mein Profil</h2>
+                <button id="settings-btn" class="btn-icon">⚙️</button>
+            </div>
+            <div class="profile-content">
+                <div class="profile-avatar-section">
+                    <img id="profile-avatar" src="/public/icons/icon-192.png" alt="Profilbild">
+                    <button id="change-avatar-btn" class="btn btn-secondary">Profilbild ändern</button>
+                </div>
+                <div id="profile-info"></div>
+                <button id="logout-btn" class="btn btn-danger">Ausloggen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incoming Call Modal -->
+    <div id="incoming-call-modal" class="modal hidden">
+        <div class="modal-content call-modal">
+            <h2>Eingehender Anruf</h2>
+            <div class="caller-info">
+                <img id="caller-avatar" src="" alt="">
+                <h3 id="caller-name"></h3>
+                <p id="call-type"></p>
+            </div>
+            <div class="call-actions">
+                <button id="accept-call-btn" class="btn btn-success">Annehmen</button>
+                <button id="reject-call-btn" class="btn btn-danger">Ablehnen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Call Modal -->
+    <div id="active-call-modal" class="modal hidden">
+        <div class="modal-content call-modal-active">
+            <div id="video-container" class="video-container">
+                <video id="remote-video" autoplay playsinline></video>
+                <video id="local-video" autoplay playsinline muted></video>
+            </div>
+            <div class="call-controls">
+                <button id="mute-btn" class="btn-call-control">🎤</button>
+                <button id="video-toggle-btn" class="btn-call-control">📹</button>
+                <button id="end-call-btn" class="btn-call-control end">📞</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification-toast" class="toast hidden"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/src/js/app.js"></script>
+    <script src="/src/js/auth.js"></script>
+    <script src="/src/js/chat.js"></script>
+    <script src="/src/js/moderation.js"></script>
+    <script src="/src/js/webrtc.js"></script>
+    <script src="/src/js/vpn-detection.js"></script>
+    <script>
+        // Links für AGB / Datenschutz / Community-Regeln
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('show-terms')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.open('/docs/agb.html', '_blank');
+            });
+            document.getElementById('show-privacy')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.open('/docs/datenschutz.html', '_blank');
+            });
+            document.getElementById('show-community-rules')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.open('/docs/community-regeln.html', '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
