@@ -356,18 +356,6 @@ async function logIPAddress(userId, ip, isVPN) {
     }
 }
 
-// =====================================================
-// VPN CHECK BEFORE AUTH (wird in vpn-detection.js definiert)
-// =====================================================
-
-async function checkVPNBeforeAuth(email) {
-    // Diese Funktion wird in vpn-detection.js implementiert
-    // Hier nur Fallback
-    return {
-        allowed: true,
-        ip: 'unknown',
-        isVPN: false
-    };
-}
+// checkVPNBeforeAuth() wird in vpn-detection.js definiert — hier NICHT nochmal!
 
 console.log('✅ Auth.js loaded');
