@@ -1,1 +1,378 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeChat - Command Center</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+    <!-- GLASSMORPHISM SIDEBAR -->
+    <aside class="sidebar glass">
+        <div class="sidebar-header">
+            <div class="logo-container">
+                <div class="logo-icon">🛡️</div>
+                <div class="logo-text">
+                    <h1>SafeChat</h1>
+                    <p class="subtitle">Command Center</p>
+                </div>
+            </div>
+            <div class="role-badge" id="user-role">
+                <span class="role-icon">👑</span>
+                <span class="role-text">Loading...</span>
+            </div>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <span class="nav-section-title">OVERVIEW</span>
+                <button class="nav-btn active" data-view="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                    <span class="nav-indicator"></span>
+                </button>
+            </div>
+            
+            <div class="nav-section">
+                <span class="nav-section-title">MODERATION</span>
+                <button class="nav-btn" data-view="reports">
+                    <span class="nav-icon">⚠️</span>
+                    <span class="nav-text">Reports</span>
+                    <span class="badge pulse" id="reports-badge">0</span>
+                    <span class="nav-indicator"></span>
+                </button>
+                <button class="nav-btn" data-view="users">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Users</span>
+                    <span class="nav-indicator"></span>
+                </button>
+                <button class="nav-btn" data-view="chats">
+                    <span class="nav-icon">💬</span>
+                    <span class="nav-text">Chats</span>
+                    <span class="nav-indicator"></span>
+                </button>
+            </div>
+            
+            <div class="nav-section">
+                <span class="nav-section-title">MONITORING</span>
+                <button class="nav-btn" data-view="calls">
+                    <span class="nav-icon">📞</span>
+                    <span class="nav-text">Calls</span>
+                    <span class="nav-indicator"></span>
+                </button>
+                <button class="nav-btn" data-view="vpn">
+                    <span class="nav-icon">🔒</span>
+                    <span class="nav-text">VPN Detection</span>
+                    <span class="nav-indicator"></span>
+                </button>
+                <button class="nav-btn" data-view="logs">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-text">Activity Logs</span>
+                    <span class="nav-indicator"></span>
+                </button>
+            </div>
+            
+            <div class="nav-section" id="admin-section" style="display: none;">
+                <span class="nav-section-title">ADMIN</span>
+                <button class="nav-btn" data-view="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Settings</span>
+                    <span class="nav-indicator"></span>
+                </button>
+            </div>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar" id="admin-avatar">👤</div>
+                <div class="user-info">
+                    <span class="user-name" id="admin-username">Admin</span>
+                    <span class="user-status online">● Online</span>
+                </div>
+            </div>
+            <button id="back-to-app" class="footer-btn">
+                <span class="btn-icon">←</span>
+                <span>To App</span>
+            </button>
+            <button id="logout-admin" class="footer-btn logout">
+                <span class="btn-icon">🚪</span>
+                <span>Logout</span>
+            </button>
+        </div>
+    </aside>
 
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-content">
+        <!-- ANIMATED HEADER -->
+        <header class="top-header glass">
+            <div class="header-left">
+                <h2 id="view-title" class="view-title">Dashboard</h2>
+                <div class="breadcrumb">
+                    <span>Home</span>
+                    <span class="separator">/</span>
+                    <span id="breadcrumb-current">Dashboard</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="header-stats">
+                    <div class="header-stat">
+                        <span class="stat-label">Online</span>
+                        <span class="stat-value online-count" id="header-online">0</span>
+                    </div>
+                    <div class="header-stat">
+                        <span class="stat-label">Pending</span>
+                        <span class="stat-value pending-count" id="header-pending">0</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD VIEW -->
+        <div id="dashboard-view" class="view active">
+            <!-- GRADIENT STATS CARDS -->
+            <div class="stats-grid">
+                <div class="stat-card gradient-purple">
+                    <div class="stat-card-icon">👥</div>
+                    <div class="stat-card-content">
+                        <h3 class="stat-number" id="total-users">0</h3>
+                        <p class="stat-label">Total Users</p>
+                        <div class="stat-change positive">
+                            <span class="arrow">↑</span>
+                            <span>12% month</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card gradient-green">
+                    <div class="stat-card-icon">🟢</div>
+                    <div class="stat-card-content">
+                        <h3 class="stat-number" id="online-users">0</h3>
+                        <p class="stat-label">Online Now</p>
+                        <div class="stat-change positive">
+                            <span class="pulse-dot"></span>
+                            <span>Live</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card gradient-orange">
+                    <div class="stat-card-icon">⚠️</div>
+                    <div class="stat-card-content">
+                        <h3 class="stat-number" id="pending-reports">0</h3>
+                        <p class="stat-label">Pending Reports</p>
+                        <div class="stat-change urgent">
+                            <span>Needs Attention</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card gradient-red">
+                    <div class="stat-card-icon">🚫</div>
+                    <div class="stat-card-content">
+                        <h3 class="stat-number" id="banned-users">0</h3>
+                        <p class="stat-label">Banned Users</p>
+                        <div class="stat-change negative">
+                            <span class="arrow">↓</span>
+                            <span>8% week</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTENT GRID -->
+            <div class="content-grid">
+                <div class="panel glass">
+                    <div class="panel-header">
+                        <h3><span class="panel-icon">📊</span> Recent Activity</h3>
+                        <button class="panel-action">View All →</button>
+                    </div>
+                    <div class="panel-body">
+                        <div id="recent-activities" class="activity-timeline"></div>
+                    </div>
+                </div>
+                
+                <div class="panel glass">
+                    <div class="panel-header">
+                        <h3><span class="panel-icon">👥</span> Newest Members</h3>
+                        <button class="panel-action">View All →</button>
+                    </div>
+                    <div class="panel-body">
+                        <div id="recent-users" class="user-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- OTHER VIEWS -->
+        <div id="reports-view" class="view">
+            <div class="view-header">
+                <select id="report-status-filter" class="select-modern">
+                    <option value="all">🔍 All Status</option>
+                    <option value="pending">⏳ Pending</option>
+                    <option value="reviewing">👀 Reviewing</option>
+                    <option value="resolved">✅ Resolved</option>
+                    <option value="rejected">❌ Rejected</option>
+                </select>
+                <select id="report-priority-filter" class="select-modern">
+                    <option value="all">⚡ All Priorities</option>
+                    <option value="2">🔴 Critical</option>
+                    <option value="1">🟡 High</option>
+                    <option value="0">🟢 Normal</option>
+                </select>
+                <button class="btn-action gradient" onclick="loadReports()">
+                    <span class="btn-icon">🔄</span> Refresh
+                </button>
+            </div>
+            <div id="reports-list" class="table-container"></div>
+        </div>
+
+        <div id="users-view" class="view">
+            <div class="view-header">
+                <input type="text" id="user-search" placeholder="🔍 Search users..." class="search-bar">
+                <select id="user-status-filter" class="select-modern">
+                    <option value="all">All Status</option>
+                    <option value="active">✅ Active</option>
+                    <option value="warned">⚠️ Warned</option>
+                    <option value="banned">🚫 Banned</option>
+                </select>
+                <button class="btn-action gradient" onclick="loadUsers()">
+                    <span class="btn-icon">🔄</span> Refresh
+                </button>
+            </div>
+            <div id="users-list" class="table-container"></div>
+        </div>
+
+        <div id="chats-view" class="view">
+            <div class="view-header">
+                <input type="text" id="chat-search" placeholder="🔍 Search..." class="search-bar">
+                <button class="btn-action gradient" onclick="loadChats()">
+                    <span class="btn-icon">🔄</span> Refresh
+                </button>
+            </div>
+            <div id="chats-list" class="table-container"></div>
+        </div>
+
+        <div id="calls-view" class="view">
+            <div class="view-header">
+                <select id="call-status-filter" class="select-modern">
+                    <option value="all">All Calls</option>
+                    <option value="accepted">📞 Accepted</option>
+                    <option value="rejected">📵 Rejected</option>
+                </select>
+                <button class="btn-action gradient" onclick="loadCalls()">
+                    <span class="btn-icon">🔄</span> Refresh
+                </button>
+            </div>
+            <div id="calls-list" class="table-container"></div>
+        </div>
+
+        <div id="vpn-view" class="view">
+            <div class="view-header">
+                <select id="vpn-filter" class="select-modern">
+                    <option value="all">All</option>
+                    <option value="vpn">🔒 VPN</option>
+                    <option value="blocked">🚫 Blocked</option>
+                </select>
+                <button class="btn-action gradient" onclick="loadVPNDetections()">
+                    <span class="btn-icon">🔄</span> Refresh
+                </button>
+            </div>
+            <div id="vpn-list" class="table-container"></div>
+        </div>
+
+        <div id="logs-view" class="view">
+            <div class="view-header">
+                <input type="date" id="log-date-filter" class="input-modern">
+                <button class="btn-action gradient" onclick="loadLogs()">
+                    <span class="btn-icon">🔄</span> Refresh
+                </button>
+            </div>
+            <div id="logs-list" class="table-container"></div>
+        </div>
+
+        <div id="settings-view" class="view">
+            <div class="content-grid">
+                <div class="panel glass">
+                    <div class="panel-header">
+                        <h3><span class="panel-icon">👮</span> Moderators</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="moderators-list"></div>
+                        <button class="btn-action gradient full-width" onclick="showAddModeratorModal()">
+                            <span class="btn-icon">+</span> Add Moderator
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="panel glass">
+                    <div class="panel-header">
+                        <h3><span class="panel-icon">⚙️</span> App Settings</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="setting-toggle">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="maintenance-mode">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <div class="toggle-info">
+                                <span class="toggle-label">Maintenance Mode</span>
+                                <span class="toggle-desc">Disable app</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODALS -->
+    <div id="user-detail-modal" class="modal-overlay hidden">
+        <div class="modal-container glass">
+            <div class="modal-header">
+                <h2><span class="modal-icon">👤</span> User Details</h2>
+                <button class="modal-close" onclick="closeUserDetail()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div id="user-detail-content"></div>
+                <div class="modal-actions">
+                    <button class="btn-action warning" onclick="warnUser()">⚠️ Warn</button>
+                    <button class="btn-action danger" onclick="banUser()">🚫 Ban</button>
+                    <button class="btn-action success" onclick="unbanUser()">✅ Unban</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="report-detail-modal" class="modal-overlay hidden">
+        <div class="modal-container glass">
+            <div class="modal-header">
+                <h2><span class="modal-icon">⚠️</span> Report Details</h2>
+                <button class="modal-close" onclick="closeReportDetail()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div id="report-detail-content"></div>
+                <div class="modal-actions">
+                    <button class="btn-action success" onclick="resolveReport()">✅ Resolve</button>
+                    <button class="btn-action danger" onclick="rejectReport()">❌ Reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="chat-detail-modal" class="modal-overlay hidden">
+        <div class="modal-container glass large">
+            <div class="modal-header">
+                <h2><span class="modal-icon">💬</span> Chat History</h2>
+                <button class="modal-close" onclick="closeChatDetail()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div id="chat-detail-info"></div>
+                <div id="chat-messages-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
